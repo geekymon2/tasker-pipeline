@@ -9,16 +9,15 @@ variables:
   AZURE_SUBSCRIPTION: 'Azure-DevOps-Connection'  
 
 stages:
-  - stage: Checkout and Install
-    displayName: Terraform Install
+  - stage: Checkout_Install
+    displayName: Terraform_Install
     jobs:
       - job: TerraformInstall
-        displayName: "Terraform Install"
+        displayName: "Terraform_Install"
         steps:
           - task: Checkout@2
-            displayName: "Checkout Code"
-          
-          - task: TerraformInstaller@1
+            displayName: "Checkout Code"         
+          - task: TerraformInstaller@2
             displayName: install terraform
             inputs:
               terraformVersion: "latest"
@@ -41,23 +40,23 @@ stages:
               command: 'validate'
               workingDirectory: $(TF_WORKING_DIRECTORY)              
 
-  - stage:  Plan and Apply
+  - stage:  Plan_Apply
     displayName: Terraform Plan and Apply
     jobs:
       - job: TerraformInstall
         displayName: "Terraform Install"
         steps:
           - task: TerraformCLI@0
-          displayName: "Terraform Plan"
-          inputs:
-            command: 'plan'
-            workingDirectory: $(TF_WORKING_DIRECTORY)
-            additionalArgs: '-out=tfplan'
+            displayName: "Terraform Plan"
+            inputs:
+              command: 'plan'
+              workingDirectory: $(TF_WORKING_DIRECTORY)
+              additionalArgs: '-out=tfplan'
 
-        - task: TerraformCLI@0
-          displayName: "Terraform Apply"
-          condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-          inputs:
-            command: 'apply'
-            workingDirectory: $(TF_WORKING_DIRECTORY)
-            additionalArgs: '-auto-approve tfplan'
+          - task: TerraformCLI@0
+            displayName: "Terraform Apply"
+            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+            inputs:
+              command: 'apply'
+              workingDirectory: $(TF_WORKING_DIRECTORY)
+              additionalArgs: '-auto-approve tfplan'
