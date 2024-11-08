@@ -15,8 +15,6 @@ stages:
       - job: TerraformInstall
         displayName: "Terraform_Install"
         steps:
-          - task: Checkout@1
-            displayName: "Checkout Code"
           - task: TerraformInstaller@2
             displayName: install terraform
             inputs:
