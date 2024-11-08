@@ -6,7 +6,7 @@ pool:
 
 variables:
   TF_WORKING_DIRECTORY: 'terraform'
-  AZURE_SUBSCRIPTION: '<Your Azure DevOps Service Connection Name>'  
+  AZURE_SUBSCRIPTION: 'Azure-DevOps-Connection'  
 
 stages:
   - stage: Checkout and Install
