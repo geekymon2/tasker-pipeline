@@ -16,7 +16,14 @@ stages:
             inputs:
               terraformVersion: "latest"
 
-          - task: TerraformCLI@0
+          - task: TerraformCLI
             displayName: "check terraform version"
             inputs:
               command: version
+
+          - task: TerraformCLI
+            displayName: "terraform apply"
+            inputs:
+              command: apply   
+
+          
