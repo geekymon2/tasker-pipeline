@@ -5,8 +5,8 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
-  TF_WORKING_DIRECTORY: 'terraform'
-  AZURE_SUBSCRIPTION: 'Azure-DevOps-Connection'
+  TF_WORKING_DIRECTORY: "terraform"
+  AZURE_SUBSCRIPTION: "Azure-DevOps-Connection"
 
 stages:
   - stage: Checkout_Install
@@ -28,17 +28,17 @@ stages:
           - task: TerraformInstaller@2
             displayName: "Terraform Init"
             inputs:
-              command: 'init'
+              command: "init"
               workingDirectory: $(TF_WORKING_DIRECTORY)
               backendServiceName: $(AZURE_SUBSCRIPTION)
 
           - task: TerraformCLI@0
             displayName: "Terraform Validate"
             inputs:
-              command: 'validate'
-              workingDirectory: $(TF_WORKING_DIRECTORY)              
+              command: "validate"
+              workingDirectory: $(Build.SourcesDirectory)/$(Build.Repository.Name)
 
-  - stage:  Plan_Apply
+  - stage: Plan_Apply
     displayName: Terraform Plan and Apply
     jobs:
       - job: TerraformInstall
@@ -47,14 +47,14 @@ stages:
           - task: TerraformCLI@0
             displayName: "Terraform Plan"
             inputs:
-              command: 'plan'
+              command: "plan"
               workingDirectory: $(TF_WORKING_DIRECTORY)
-              additionalArgs: '-out=tfplan'
+              additionalArgs: "-out=tfplan"
 
           - task: TerraformCLI@0
             displayName: "Terraform Apply"
             condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
             inputs:
-              command: 'apply'
+              command: "apply"
               workingDirectory: $(TF_WORKING_DIRECTORY)
-              additionalArgs: '-auto-approve tfplan'
+              additionalArgs: "-auto-approve tfplan"
