@@ -4,26 +4,60 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  TF_WORKING_DIRECTORY: 'terraform'
+  AZURE_SUBSCRIPTION: '<Your Azure DevOps Service Connection Name>'  
+
 stages:
-  - stage: Plan
-    displayName: Terraform Plan
+  - stage: Checkout and Install
+    displayName: Terraform Install
     jobs:
-      - job: TerraformPlan
-        displayName: "Terraform Plan"
+      - job: TerraformInstall
+        displayName: "Terraform Install"
         steps:
+          - task: Checkout@2
+            displayName: "Checkout Code"
+          
           - task: TerraformInstaller@1
             displayName: install terraform
             inputs:
               terraformVersion: "latest"
 
-          - task: TerraformCLI
+          - task: TerraformCLI@0
             displayName: "check terraform version"
             inputs:
               command: version
 
-          - task: TerraformCLI
-            displayName: "terraform apply"
+          - task: TerraformInstaller@0
+            displayName: "Terraform Init"
             inputs:
-              command: apply   
+              command: 'init'
+              workingDirectory: $(TF_WORKING_DIRECTORY)
+              backendServiceName: $(AZURE_SUBSCRIPTION)
 
-          
+          - task: TerraformCLI@0
+            displayName: "Terraform Validate"
+            inputs:
+              command: 'validate'
+              workingDirectory: $(TF_WORKING_DIRECTORY)              
+
+  - stage:  Plan and Apply
+    displayName: Terraform Plan and Apply
+    jobs:
+      - job: TerraformInstall
+        displayName: "Terraform Install"
+        steps:
+          - task: TerraformCLI@0
+          displayName: "Terraform Plan"
+          inputs:
+            command: 'plan'
+            workingDirectory: $(TF_WORKING_DIRECTORY)
+            additionalArgs: '-out=tfplan'
+
+        - task: TerraformCLI@0
+          displayName: "Terraform Apply"
+          condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+          inputs:
+            command: 'apply'
+            workingDirectory: $(TF_WORKING_DIRECTORY)
+            additionalArgs: '-auto-approve tfplan'
