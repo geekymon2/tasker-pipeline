@@ -38,6 +38,12 @@ stages:
                 echo $(Build.SourcesDirectory)/$(Build.Repository.Name)
 
           - task: TerraformCLI@0
+              displayName: "Terraform Init"
+              inputs:
+                command: "init"
+                workingDirectory: $(Build.SourcesDirectory)
+
+          - task: TerraformCLI@0
             displayName: "Terraform Validate"
             inputs:
               command: "validate"
