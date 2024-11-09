@@ -41,7 +41,7 @@ stages:
             displayName: "Terraform Validate"
             inputs:
               command: "validate"
-              workingDirectory: $(Build.SourcesDirectory)/$(Build.Repository.Name)
+              workingDirectory: $(Build.SourcesDirectory)
 
   - stage: Plan_Apply
     displayName: Terraform Plan and Apply
