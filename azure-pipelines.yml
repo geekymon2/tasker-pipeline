@@ -32,6 +32,12 @@ stages:
               workingDirectory: $(TF_WORKING_DIRECTORY)
               backendServiceName: $(AZURE_SUBSCRIPTION)
 
+          - task: Bash@3
+            displayName: "verifying"
+            inputs:
+              targetType: "inline"
+              script: echo $(Build.SourcesDirectory)/$(Build.Repository.Name)
+
           - task: TerraformCLI@0
             displayName: "Terraform Validate"
             inputs:
