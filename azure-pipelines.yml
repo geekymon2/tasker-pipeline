@@ -12,8 +12,8 @@ stages:
   - stage: Checkout_Install
     displayName: Terraform_Install
     jobs:
-      - job: TerraformInstall
-        displayName: "Terraform_Install"
+      - job: Terraform
+        displayName: "Terraform"
         steps:
           - task: TerraformInstaller@2
             displayName: install terraform
@@ -42,12 +42,6 @@ stages:
               command: "validate"
               workingDirectory: $(Build.SourcesDirectory)
 
-  - stage: Plan_Apply
-    displayName: Terraform Plan and Apply
-    jobs:
-      - job: TerraformPlanApply
-        displayName: "Terraform Plan"
-        steps:
           - task: TerraformCLI@0
             displayName: "Terraform Plan"
             inputs:
