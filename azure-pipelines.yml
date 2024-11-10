@@ -25,23 +25,16 @@ stages:
             inputs:
               command: version
 
-          - task: TerraformInstaller@2
-            displayName: "Terraform Init"
-            inputs:
-              command: "init"
-              workingDirectory: $(TF_WORKING_DIRECTORY)
-              backendServiceName: $(AZURE_SUBSCRIPTION)
-
           - task: CmdLine@2
             inputs:
               script: |
                 echo $(Build.SourcesDirectory)/$(Build.Repository.Name)
 
           - task: TerraformCLI@0
-              displayName: "Terraform Init"
-              inputs:
-                command: "init"
-                workingDirectory: $(Build.SourcesDirectory)
+            displayName: "Terraform Init"
+            inputs:
+              command: "init"
+              workingDirectory: $(Build.SourcesDirectory)
 
           - task: TerraformCLI@0
             displayName: "Terraform Validate"
