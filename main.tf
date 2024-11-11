@@ -11,6 +11,15 @@ provider "azurerm" {
   features {}
 }
 
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "GeekyMon2Storage"
+    storage_account_name = "geekymon2storageaccount"
+    container_name       = "geekymon2-storage-container"
+    key                  = "terraform.tfstate"
+  }
+}
+
 module "app-service" {
   source              = "./modules/app-service"
   resource_group_name = azurerm_resource_group.tasker-resources.name
