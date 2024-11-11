@@ -9,7 +9,7 @@ variables:
   AZURE_SUBSCRIPTION: "Azure-DevOps-Connection"
 
 stages:
-  - stage: Terraform Deployments
+  - stage: Terraform_Deployment
     displayName: Terraform_Install
     jobs:
       - job: Terraform
