@@ -9,7 +9,7 @@ variables:
   AZURE_SUBSCRIPTION: "Azure-DevOps-Connection"
 
 stages:
-  - stage: Checkout_Install
+  - stage: Terraform Deployments
     displayName: Terraform_Install
     jobs:
       - job: Terraform
@@ -35,19 +35,21 @@ stages:
             inputs:
               command: "init"
               workingDirectory: $(Build.SourcesDirectory)
+              environmentServiceName: $(AZURE_SUBSCRIPTION)
 
           - task: TerraformCLI@0
             displayName: "Terraform Validate"
             inputs:
               command: "validate"
               workingDirectory: $(Build.SourcesDirectory)
+              environmentServiceName: $(AZURE_SUBSCRIPTION)
 
           - task: TerraformCLI@0
             displayName: "Terraform Plan"
             inputs:
               command: "plan"
               workingDirectory: $(Build.SourcesDirectory)
-              additionalArgs: "-out=tfplan"
+              environmentServiceName: $(AZURE_SUBSCRIPTION)
 
           - task: TerraformCLI@0
             displayName: "Terraform Apply"
@@ -55,4 +57,4 @@ stages:
             inputs:
               command: "apply"
               workingDirectory: $(Build.SourcesDirectory)
-              additionalArgs: "-auto-approve tfplan"
+              environmentServiceName: $(AZURE_SUBSCRIPTION)
