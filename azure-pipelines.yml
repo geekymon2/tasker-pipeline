@@ -5,8 +5,11 @@ pool:
   name: Local
 
 variables:
-  TF_WORKING_DIRECTORY: "terraform"
   AZURE_SUBSCRIPTION: "Azure-DevOps-Connection"
+  TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME: "GeekyMon2Storage"
+  TF_STORAGE_ACCOUNT_NAME: "geekymon2storageaccount"
+  TF_STORAGE_ACCOUNT_CONTAINER_NAME: "geekymon2-storage-container"
+  TF_KEY: "terraform.tfstate"
 
 stages:
   - stage: Terraform_Deployment
@@ -25,10 +28,10 @@ stages:
             inputs:
               command: version
 
-          - task: CmdLine@2
-            inputs:
-              script: |
-                echo $(Build.SourcesDirectory)/$(Build.Repository.Name)
+          # - task: CmdLine@2
+          #   inputs:
+          #     script: |
+          #       echo $(Build.SourcesDirectory)
 
           - task: TerraformCLI@0
             displayName: "Terraform Init"
@@ -37,6 +40,10 @@ stages:
               backendType: "azurerm"
               workingDirectory: $(Build.SourcesDirectory)
               backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
+              backendAzureRmResourceGroupName: ${{ variables.TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME }}
+              backendAzureRmStorageAccountName: ${{ variables.TF_STORAGE_ACCOUNT_NAME }}
+              backendAzureRmContainerName: ${{ variables.TF_STORAGE_ACCOUNT_CONTAINER_NAME }}
+              backendAzureRmKey: ${{ variables.TF_KEY }}
 
           # - task: TerraformCLI@0
           #   displayName: "Terraform Validate"
