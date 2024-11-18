@@ -69,3 +69,15 @@ stages:
               backendType: "azurerm"
               workingDirectory: $(Build.SourcesDirectory)
               backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
+
+      # - job: Deploy
+      #   displayName: "Deploy"
+      #   dependsOn:
+      #     - Terraform
+      #   steps:
+      #     - task: AzureResourceGroupDeployment@1
+      #       displayName: "Deploy"
+      #       inputs:
+      #         azureSubscription: ${{ variables.AZURE_SUBSCRIPTION }}
+      #         template: $(System.DefaultWorkingDirectory)/azuredeploy.json
+      #         parameters: '{"resourceGroupName":"$(TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME)"}'

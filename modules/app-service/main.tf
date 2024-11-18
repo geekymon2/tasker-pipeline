@@ -14,5 +14,9 @@ resource "azurerm_linux_web_app" "tasker-linux-web-app" {
 
   site_config {
     always_on = false
+
+    application_stack {
+      dotnet_version = "v8.0"
+    }
   }
 }
