@@ -18,6 +18,12 @@ stages:
       - job: Terraform
         displayName: "Terraform"
         steps:
+          ### This is for Testing Only ####
+          # - task: CmdLine@2
+          #   inputs:
+          #     script: |
+          #       echo $(Build.SourcesDirectory)
+
           - task: TerraformInstaller@2
             displayName: install terraform
             inputs:
@@ -27,11 +33,6 @@ stages:
             displayName: "check terraform version"
             inputs:
               command: version
-
-          # - task: CmdLine@2
-          #   inputs:
-          #     script: |
-          #       echo $(Build.SourcesDirectory)
 
           - task: TerraformCLI@0
             displayName: "Terraform Init"
@@ -53,17 +54,18 @@ stages:
               workingDirectory: $(Build.SourcesDirectory)
               backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
 
-          # - task: TerraformCLI@0
-          #   displayName: "Terraform Plan"
-          #   inputs:
-          #     command: "plan"
-          #     workingDirectory: $(Build.SourcesDirectory)
-          #     environmentServiceName: $(AZURE_SUBSCRIPTION)
+          - task: TerraformCLI@0
+            displayName: "Terraform Plan"
+            inputs:
+              command: "plan"
+              backendType: "azurerm"
+              workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
 
-          # - task: TerraformCLI@0
-          #   displayName: "Terraform Apply"
-          #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-          #   inputs:
-          #     command: "apply"
-          #     workingDirectory: $(Build.SourcesDirectory)
-          #     environmentServiceName: $(AZURE_SUBSCRIPTION)
+          - task: TerraformCLI@0
+            displayName: "Terraform Apply"
+            inputs:
+              command: "apply"
+              backendType: "azurerm"
+              workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
