@@ -45,12 +45,13 @@ stages:
               backendAzureRmContainerName: ${{ variables.TF_STORAGE_ACCOUNT_CONTAINER_NAME }}
               backendAzureRmKey: ${{ variables.TF_KEY }}
 
-          # - task: TerraformCLI@0
-          #   displayName: "Terraform Validate"
-          #   inputs:
-          #     command: "validate"
-          #     workingDirectory: $(Build.SourcesDirectory)
-          #     environmentServiceName: $(AZURE_SUBSCRIPTION)
+          - task: TerraformCLI@0
+            displayName: "Terraform Validate"
+            inputs:
+              command: "validate"
+              backendType: "azurerm"
+              workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
 
           # - task: TerraformCLI@0
           #   displayName: "Terraform Plan"
