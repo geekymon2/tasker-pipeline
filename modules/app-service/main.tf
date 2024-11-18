@@ -19,4 +19,15 @@ resource "azurerm_linux_web_app" "tasker-linux-web-app" {
       dotnet_version = "8.0"
     }
   }
+
+  logs {
+    application_logs {
+      file_system_level = "Verbose"
+      azure_blob_storage {
+        level           = "Verbose"
+        sas_url         = "https://geekymon2storageaccount.blob.core.windows.net/$logs?sp=racwdl&st=2024-11-18T07:03:43Z&se=2024-11-24T15:03:43Z&skoid=d56f2583-f7b7-4da7-81d4-a2a605cc463e&sktid=1a8baaf8-8855-40d4-9585-ae6328c54068&skt=2024-11-18T07:03:43Z&ske=2024-11-24T15:03:43Z&sks=b&skv=2022-11-02&spr=https&sv=2022-11-02&sr=c&sig=i%2FbcK0Da04VokmO1kczhCGAuB1F2bBwsSwWx5XkFtAU%3D"
+        retention_in_days = 30
+      }
+    }      
+  }
 }
