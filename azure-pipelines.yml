@@ -34,26 +34,28 @@ stages:
             displayName: "Terraform Init"
             inputs:
               command: "init"
+              backendType: "azurerm"
               workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
 
-          - task: TerraformCLI@0
-            displayName: "Terraform Validate"
-            inputs:
-              command: "validate"
-              workingDirectory: $(Build.SourcesDirectory)
-              environmentServiceName: $(AZURE_SUBSCRIPTION)
+          # - task: TerraformCLI@0
+          #   displayName: "Terraform Validate"
+          #   inputs:
+          #     command: "validate"
+          #     workingDirectory: $(Build.SourcesDirectory)
+          #     environmentServiceName: $(AZURE_SUBSCRIPTION)
 
-          - task: TerraformCLI@0
-            displayName: "Terraform Plan"
-            inputs:
-              command: "plan"
-              workingDirectory: $(Build.SourcesDirectory)
-              environmentServiceName: $(AZURE_SUBSCRIPTION)
+          # - task: TerraformCLI@0
+          #   displayName: "Terraform Plan"
+          #   inputs:
+          #     command: "plan"
+          #     workingDirectory: $(Build.SourcesDirectory)
+          #     environmentServiceName: $(AZURE_SUBSCRIPTION)
 
-          - task: TerraformCLI@0
-            displayName: "Terraform Apply"
-            condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-            inputs:
-              command: "apply"
-              workingDirectory: $(Build.SourcesDirectory)
-              environmentServiceName: $(AZURE_SUBSCRIPTION)
+          # - task: TerraformCLI@0
+          #   displayName: "Terraform Apply"
+          #   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+          #   inputs:
+          #     command: "apply"
+          #     workingDirectory: $(Build.SourcesDirectory)
+          #     environmentServiceName: $(AZURE_SUBSCRIPTION)
