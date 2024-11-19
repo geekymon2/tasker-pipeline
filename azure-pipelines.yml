@@ -75,12 +75,10 @@ stages:
         dependsOn:
           - Terraform
         steps:
-          - task: DownloadPipelineArtifact@2
+          - task: DownloadPackage@1
             displayName: "Download Artifact"
             inputs:
-              buildType: "specific"
-              project: "Tasker"
-              pipeline: "geekymon2.tasker"
-              buildVersionToDownload: "latest"
-              artifactName: "geekymon2.tasker"
-              targetPath: "$(System.DefaultWorkingDirectory)/artifact"
+              feed: "tasker"
+              definition: "Tasker"
+              version: "latest"
+              downloadPath: "$(System.DefaultWorkingDirectory)/artifact"
