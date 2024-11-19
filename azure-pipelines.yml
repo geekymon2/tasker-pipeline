@@ -78,6 +78,7 @@ stages:
           - task: DownloadPackage@1
             displayName: "Download Artifact"
             inputs:
+              packageType: "upack"
               feed: "tasker"
               definition: "Tasker"
               version: "latest"
