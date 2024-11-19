@@ -78,9 +78,9 @@ stages:
           - task: DownloadPipelineArtifact@2
             displayName: "Download Artifact"
             inputs:
-              buildType: 'current'
-              project: 'Tasker'
-              pipeline: 'geekymon2.tasker'
-              buildVersionToDownload: 'latest'
-              artifactName: 'tasker'
-              targetPath: '$(System.DefaultWorkingDirectory)/artifact'
+              buildType: "specific"
+              project: "Tasker"
+              pipeline: "geekymon2.tasker"
+              buildVersionToDownload: "latest"
+              artifactName: "tasker"
+              targetPath: "$(System.DefaultWorkingDirectory)/artifact"
