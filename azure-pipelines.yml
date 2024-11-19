@@ -82,5 +82,5 @@ stages:
               project: "Tasker"
               pipeline: "geekymon2.tasker"
               buildVersionToDownload: "latest"
-              artifactName: "tasker"
+              artifactName: "geekymon2.tasker"
               targetPath: "$(System.DefaultWorkingDirectory)/artifact"
