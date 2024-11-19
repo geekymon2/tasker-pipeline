@@ -44,7 +44,6 @@ stages:
               command: "init"
               backendType: "azurerm"
               workingDirectory: $(Build.SourcesDirectory)
-              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
               backendAzureRmResourceGroupName: ${{ variables.TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME }}
               backendAzureRmStorageAccountName: ${{ variables.TF_STORAGE_ACCOUNT_NAME }}
               backendAzureRmContainerName: ${{ variables.TF_STORAGE_ACCOUNT_CONTAINER_NAME }}
