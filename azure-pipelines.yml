@@ -84,7 +84,7 @@ stages:
             displayName: "Download Artifact"
             inputs:
               packageType: "upack"
-              feed: "tasker"
+              feed: "Tasker/tasker"
               definition: "tasker"
               version: "1.0.11"
               downloadPath: "$(System.DefaultWorkingDirectory)/artifact"
