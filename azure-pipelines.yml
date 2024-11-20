@@ -86,5 +86,5 @@ stages:
               packageType: "upack"
               feed: "tasker"
               definition: "Tasker"
-              version: "latest"
+              version: "1.0.11"
               downloadPath: "$(System.DefaultWorkingDirectory)/artifact"
