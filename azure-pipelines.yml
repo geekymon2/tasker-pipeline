@@ -5,7 +5,8 @@ pool:
   name: Local
 
 variables:
-  - group: "AZURE_SP_TERRAFORM"
+  - name: AZURE_SUBSCRIPTION
+    value: "Azure-DevOps-Connection"
   - name: TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME
     value: "GeekyMon2Storage"
   - name: TF_STORAGE_ACCOUNT_NAME
@@ -44,15 +45,11 @@ stages:
               command: "init"
               backendType: "azurerm"
               workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
               backendAzureRmResourceGroupName: ${{ variables.TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME }}
               backendAzureRmStorageAccountName: ${{ variables.TF_STORAGE_ACCOUNT_NAME }}
               backendAzureRmContainerName: ${{ variables.TF_STORAGE_ACCOUNT_CONTAINER_NAME }}
               backendAzureRmKey: ${{ variables.TF_KEY }}
-            env:
-              ARM_SUBSCRIPTION_ID: ${{ variables.AZURE_SUBSCRIPTION }}
-              ARM_CLIENT_ID: ${{ variables.AZURE_SERVICE_PRINCIPAL_ID }}
-              ARM_CLIENT_SECRET: ${{ variables.AZURE_SERVICE_PRINCIPAL_PASSWORD }}
-              ARM_TENANT_ID: ${{ variables.AZURE_TENANT_ID }}
 
           - task: TerraformCLI@0
             displayName: "Terraform Validate"
