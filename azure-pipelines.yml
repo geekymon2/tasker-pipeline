@@ -88,3 +88,12 @@ stages:
               definition: "tasker"
               version: "1.0.11"
               downloadPath: "$(System.DefaultWorkingDirectory)/artifact"
+
+          - task: AzureRmWebAppDeployment@4
+            displayName: "Deploy to Azure"
+            inputs:
+              ConnectionType: "AzureRM"
+              azureSubscription: ${{ variables.AZURE_SUBSCRIPTION }}
+              appType: "webAppLinux"
+              WebAppName: "tasker-linux-web-app"
+              packageForLinux: "$(System.DefaultWorkingDirectory)/artifact"
