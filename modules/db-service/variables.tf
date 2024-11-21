@@ -6,6 +6,10 @@ variable "location" {
     type = string
 }
 
+variable "db_account_name" {
+    type = string
+}
+
 variable "throughput" {
   type        = number
   default     = 400

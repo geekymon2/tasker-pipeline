@@ -1,5 +1,5 @@
 resource "azurerm_cosmosdb_account" "tasker-cosmosdb-account" {
-  name                      = "tasker-cosmosdb-account"
+  name                      = var.db_account_name
   location                  = var.location
   resource_group_name       = var.resource_group_name
   offer_type                = "Standard"
