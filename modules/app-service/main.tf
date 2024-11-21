@@ -22,7 +22,7 @@ resource "azurerm_linux_web_app" "tasker-linux-web-app" {
 
   app_settings = {
     "AppConfig__CosmosEndpoint" = "${var.db_account_name}.documents.azure.com:443/"
-    "AppConfig__CosmosKey" = "${azurerm_cosmosdb_account.tasker-cosmosdb-account.primary_master_key}"
+    "AppConfig__CosmosKey" = "${var.db_account_key}"
     "AppConfig__CosmosDatabase" = "tasker-db"
     "AppConfig__CosmosContainer" = "tasker-cosmosdb-sqlcontainer"
   }  

@@ -9,3 +9,7 @@ variable "location" {
 variable "db_account_name" {
     type = string
 }
+
+variable "db_account_key" {
+    type = string
+}

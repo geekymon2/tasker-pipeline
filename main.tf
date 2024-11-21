@@ -25,6 +25,7 @@ module "app-service" {
   resource_group_name = azurerm_resource_group.tasker-resources.name
   location            = azurerm_resource_group.tasker-resources.location
   db_account_name     = var.db_account_name
+  db_account_key      = module.db-service.cosmosdb_key
 }
 
 module "db-service" {
