@@ -24,14 +24,14 @@ module "app-service" {
   source              = "./modules/app-service"
   resource_group_name = azurerm_resource_group.tasker-resources.name
   location            = azurerm_resource_group.tasker-resources.location
-  db_account_name     = module.db-service.db_account_name
+  db_account_name     = var.db_account_name
 }
 
 module "db-service" {
   source              = "./modules/db-service"
   resource_group_name = azurerm_resource_group.tasker-resources.name
   location            = azurerm_resource_group.tasker-resources.location
-  db_account_name     = "tasker-cosmosdb-account"
+  db_account_name     = var.db_account_name
 }
 
 resource "azurerm_resource_group" "tasker-resources" {
