@@ -86,7 +86,7 @@ stages:
               packageType: "upack"
               feed: "Tasker/tasker"
               definition: "tasker"
-              version: "1.0.25"
+              version: "1.0.56"
               downloadPath: "$(System.DefaultWorkingDirectory)/artifact"
 
           - task: AzureRmWebAppDeployment@4
