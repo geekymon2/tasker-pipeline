@@ -1,0 +1,60 @@
+trigger:
+  - none
+
+pool:
+  name: Local
+
+variables:
+  - name: AZURE_SUBSCRIPTION
+    value: "Azure-DevOps-Connection"
+  - name: TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME
+    value: "GeekyMon2Storage"
+  - name: TF_STORAGE_ACCOUNT_NAME
+    value: "geekymon2storageaccount"
+  - name: TF_STORAGE_ACCOUNT_CONTAINER_NAME
+    value: "geekymon2-storage-container"
+  - name: TF_KEY
+    value: "terraform.tfstate"
+
+stages:
+  - stage: Terraform_Deployment
+    displayName: Terraform_Install
+    jobs:
+      - job: Terraform
+        displayName: "Terraform"
+        steps:
+          ### This is for Testing Only ####
+          # - task: CmdLine@2
+          #   inputs:
+          #     script: |
+          #       echo $(Build.SourcesDirectory)
+
+          - task: TerraformInstaller@2
+            displayName: install terraform
+            inputs:
+              terraformVersion: "latest"
+
+          - task: TerraformCLI@0
+            displayName: "check terraform version"
+            inputs:
+              command: version
+
+          - task: TerraformCLI@0
+            displayName: "Terraform Init"
+            inputs:
+              command: "init"
+              backendType: "azurerm"
+              workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
+              backendAzureRmResourceGroupName: ${{ variables.TF_STATE_STORAGEACCOUNT_RESOURCEGROUP_NAME }}
+              backendAzureRmStorageAccountName: ${{ variables.TF_STORAGE_ACCOUNT_NAME }}
+              backendAzureRmContainerName: ${{ variables.TF_STORAGE_ACCOUNT_CONTAINER_NAME }}
+              backendAzureRmKey: ${{ variables.TF_KEY }}
+
+          - task: TerraformCLI@0
+            displayName: "Terraform Destroy"
+            inputs:
+              command: "destroy"
+              backendType: "azurerm"
+              workingDirectory: $(Build.SourcesDirectory)
+              backendServiceArm: ${{ variables.AZURE_SUBSCRIPTION }}
